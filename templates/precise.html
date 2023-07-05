@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <style>
+        body {
+            font-family: Segoe UI,Frutiger,Frutiger Linotype,Dejavu Sans,Helvetica Neue,Arial,sans-serif;
+        }
+    </style>
+     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/home.css') }}">
+    <meta charset="UTF-8">
+    <h2>Precise</h2>
+</head>
+<body>
+ <form class = "form-inline" method = "POST" action="{{ url_for('configure') }}">
+<p class="lead"> DO NOT ENABLE GPU IF YOU DON'T HAVE CUDA </p>
+     <div id="start">
+     <label for="isGpu">GPU Usage</label>
+    <select name="isGpu" id="isGpu" data-role="slider">
+	    <option value= 0 >Off</option>
+	    <option value= 1 >On</option>
+        </select>
+</div>
+
+     <style>
+         div.dropdown {
+             margin: 5%;
+         }
+     </style>
+
+<div class="dropdown">
+    <tr>
+    <select name="runType" id="runType">
+      <option value="caption">Caption</option>
+      <option value="controllable">Controllable</option>
+      </select>
+    
+    <select name="controlType" id="controlType">
+          <option value="sentiment">Sentiment</option>
+          <option value="pos">Pos</option>
+          <option value="precise">Precise</option>
+          </select>
+    <select name="model" id="model">
+        <option value="blip">BLIP</option>
+        <option value="conzac">conZAC</option>
+        <option value="merge">Merge</option>
+        </select>
+    </tr>
+    <tr></tr>
+</div>
+     <div>
+     </div>
+     <style>
+         ul {
+          list-style-type: none;
+          margin: 50px;
+          padding: 50px;
+          overflow: hidden;
+          display: flex;
+          justify-content: space-between;
+          text-align: center;
+         }
+
+         li {
+             float: left;
+             display: flex;
+             text-align: center;
+             padding: 50px;
+             margin-inline: 50px;
+         }
+
+         .container {
+             width: 700px; /* Increase the width */
+             height: 350px; /* Increase the height */
+             margin-left: auto;
+             margin-right: auto;
+             text-align: center;
+         }
+
+         button[type="submit"] {
+            padding: 10px 20px; /* Increase the padding */
+            font-size: 18px; /* Increase the font size */
+        }
+     </style>
+
+     <table class="container">
+        <h3>Precise</h3>
+            <tr>
+                <td>
+                    <input type = "range" min = "0.0" max = "1.0" step = "0.01" id="slider1" value = "0.55" name = "alpha"/>
+                    <output id="output1"></output>
+                </td>
+                <td>
+                    <input type = "range" min = "1.0" max = "5.0" step = "0.5" id="slider2" value = 2.5 name = "beta" />
+                    <output id="output2">2.5</output>
+                </td>  
+                <td>
+                    <input type = "range" min = "1.0" max = "10.0" step = "0.5" id="slider3" value = 5.0 name = "theta" />
+                    <output id="output3">5.0</output>
+                </td>  
+            </tr>
+            <tr></tr>
+            <tr></tr>
+            <tr>
+                <td>alpha</td>
+                <td>beta</td>
+                <td>theta</td>
+            </tr>
+            <tr></tr>
+            <tr></tr>
+            <tr>
+                <td>
+                    <input type = "range" min = "1.0" max = "5.0" step = "1.0" id="slider7" value = 2 name = "samplesNum"/>
+                    <output id="output7">2</output>
+                </td>
+                <td>
+                    <input type = "range" min = "5.0" max = "15.0" step = "1.0" id="slider8" value = 15 name = "length"/>
+                    <output id="output8">15</output>
+                </td>
+                <td>
+                    <input type = "range" min = "1.0" max = "15.0" step = "1.0" id="slider9" value = 5 name = "numIterations"/>
+                    <output id="output9">5</output>
+                </td>
+            </tr>
+            <tr></tr>
+            <tr></tr>
+            <tr>
+                <td>sample number</td>
+                <td>text length</td>
+                <td>iterations</td>
+            </tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+     </table>
+
+     <button type = "submit"> Submit </button>
+ </form>
+
+ <script>
+     function sliderValue(slider, output) {
+         output.innerHTML = slider.value;
+
+         slider.oninput = function () {
+             output.innerHTML = this.value;
+         }
+     }
+    for(let i = 1; i < 7; i++) {
+        sliderValue(document.getElementById("slider".concat(i.toString())), document.getElementById("output".concat(i.toString())));
+    }
+ </script>
+</body>
+</html>

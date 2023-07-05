@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<style>
+    .imageContainer {
+        width: auto;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .imageclass {
+        height: auto;
+        max-width: 50%;
+    }
+
+    div {
+        font-family: Segoe UI,Frutiger,Frutiger Linotype,Dejavu Sans,Helvetica Neue,Arial,sans-serif;
+        font-size: 24px;
+    }
+
+</style>
+<div class="imageContainer">
+<img src="{{ image }}" class="imageclass">
+<!-- <img src="../static/pictures/AKJX1203.JPG" class="imageclass">-->
+</div>
+<script>
+    function onClickFunction() {
+        location.replace("http://localhost:8080");
+    }
+</script>
+
+<div style="padding-left: 380px; text-indent: -340px; margin-right: 80px">Final Caption: {{ fc }}</div>
+<div style="padding-left: 380px; text-indent: -340px; margin-right: 80px">Best Caption: {{ bc }}</div>
+
+
+<div style="text-align: center">
+ <button style="margin: 10px; font-family: Segoe UI,Frutiger,Frutiger Linotype,Dejavu Sans,Helvetica Neue,Arial,sans-serif; " class="homeButton" onclick="onClickFunction()"/>Back</button>
+</div>
+</body>
+</html>

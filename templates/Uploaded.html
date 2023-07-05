@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <style>
+        body {
+            font-family: Segoe UI,Frutiger,Frutiger Linotype,Dejavu Sans,Helvetica Neue,Arial,sans-serif;
+        }
+    </style>
+     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/home.css') }}">
+    <meta charset="UTF-8">
+    <h2>Configure parameters</h2>
+</head>
+<body>
+    <div class="description-box">
+        <p>RunType: Select RunType equal to "contrallable" to control text generation.</p>
+        <p>ControlType: Control text by sentiment or part of speech.</p>
+        <p>SentimentType: Control sentiment: positive or negative</p>
+        <p>Order: Generation order of text</p>
+        <p>Alpha: Weight for fluency; Choose between 0 and 1</p>
+        <p>Beta: Weight for image-matching degree; Choose between 1 and 5</p>
+        <p>Gamma: Weight for controllable degree; Choose between 1 and 10</p>
+        <p>SampleNum: Number of runs; Choose between 1 and 5</p>
+        <p>Length: Sentence length; Choose between 5 and 10</p>
+        <p>NumIterations: Iterations for Gibbs Sampling; Choose between 1 and 15</p>
+    </div>
+ <form class = "form-inline" method = "POST" action="{{ url_for('configure') }}">
+<p class="lead"> DO NOT ENABLE GPU IF YOU DON'T HAVE CUDA </p>
+     <div id="start">
+     <label for="isGpu">GPU Usage</label>
+    <select name="isGpu" id="isGpu" data-role="slider">
+	    <option value= 0 >Off</option>
+	    <option value= 1 >On</option>
+        </select>
+</div>
+
+     <style>
+         div.dropdown {
+             margin: 5%;
+         }
+     </style>
+
+<div class="dropdown">
+    <tr>
+    <select name="runType" id="runType">
+      <option value="caption">Caption</option>
+      <option value="controllable">Controllable</option>
+      </select>
+    
+	<select name="controlType" id="controlType" onchange="showDiv(this)">
+          <option value="sentiment">Sentiment</option>
+          <option value="pos">Pos</option>
+          <option value="precise">Precise</option>
+          </select>
+          
+    <select name="model" id="model">
+        <option value="blip1">BLIP 1</option>
+        <option value="blip2">BLIP 2</option>
+        <option value="lstm">CNN-LSTM</option>
+    </select>
+
+    <select name="sentimentType" id="sentimentType">
+        <option value="positive">Positive</option>
+        <option value="negative">Negative</option>
+    </select>
+
+    <select name="order" id="order">
+        <option value="sequential">Sequential</option>
+        <option value="shuffle">Shuffle</option>
+        <option value="random">Random</option>
+    </select>
+    </tr>
+    <tr></tr>
+</div>
+     <div>
+     </div>
+     <style>
+         ul {
+          list-style-type: none;
+          margin: 50px;
+          padding: 50px;
+          overflow: hidden;
+          display: flex;
+          justify-content: space-between;
+          text-align: center;
+         }
+
+         li {
+             float: left;
+             display: flex;
+             text-align: center;
+             padding: 50px;
+             margin-inline: 50px;
+         }
+
+         .container {
+             width: 700px; /* Increase the width */
+             height: 350px; /* Increase the height */
+             margin-left: auto;
+             margin-right: auto;
+             text-align: center;
+             align-items: center;
+             justify-content: center;
+             height: 100%;
+		     display: flex;
+		     align-items: center;
+		     justify-content: center;
+         }
+
+         button[type="submit"] {
+            padding: 10px 20px; /* Increase the padding */
+            font-size: 18px; /* Increase the font size */
+        }
+
+        .description-box {
+            position: absolute;
+            top: 50px;
+            right: 0;
+            width: 480px;
+            height: 500px;
+            padding: 5px;
+            background-color: lightgray;
+        }
+
+     </style>
+
+     <table class="container">
+            
+            <tr>
+                <td>
+                    <input type = "range" min = "0.0" max = "1.0" step = "0.01" id="slider1" value = "0.55" name = "alpha"/>
+                    <output id="output1"></output>
+                </td>
+                <td>
+                    <input type = "range" min = "1.0" max = "10.0" step = "0.5" id="slider3" value = 5.0 name = "theta" />
+                    <output id="output3">5.0</output>
+                </td>
+                <td>
+                    <input type = "range" min = "1.0" max = "5.0" step = "0.5" id="slider2" value = 2.5 name = "beta" />
+                    <output id="output2">2.5</output>
+                </td>  
+                
+                
+            </tr>
+            <tr></tr>
+            <tr></tr>
+            <tr>
+                <td>alpha</td>
+                <td><name = "theta" id="theta">theta</td>
+                <td>beta</td>
+                
+                
+            </tr>
+            <tr></tr>
+            <tr></tr>
+            <tr>
+                <td>
+                    <input type = "range" min = "1.0" max = "5.0" step = "1.0" id="slider7" value = 2 name = "samplesNum"/>
+                    <output id="output7">2</output>
+                </td>
+                <td>
+                    <input type = "range" min = "5.0" max = "15.0" step = "1.0" id="slider8" value = 15 name = "length"/>
+                    <output id="output8">15</output>
+                </td>
+                <td>
+                    <input type = "range" min = "1.0" max = "15.0" step = "1.0" id="slider9" value = 5 name = "numIterations"/>
+                    <output id="output9">5</output>
+                </td>
+                <td>
+                    <input type = "range" min = "1.0" max = "10.0" step = "0.5" id="slider10" value = 5.0 name = "gamma" />
+                    <output id="output10">5.0</output>
+                </td> 
+            </tr>
+            <tr></tr>
+            <tr></tr>
+            <tr>
+                <td>sample number</td>
+                <td>text length</td>
+                <td>iterations</td>
+                <td><name = "gamma" id="gamma">gamma</td>
+            </tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+        </table>
+
+     <button type = "submit"> Submit </button>
+ </form>
+
+ <script>
+     function sliderValue(slider, output) {
+         output.innerHTML = slider.value;
+
+         slider.oninput = function () {
+             output.innerHTML = this.value;
+         }
+     }
+    for(let i = 1; i < 7; i++) {
+        sliderValue(document.getElementById("slider".concat(i.toString())), document.getElementById("output".concat(i.toString())));
+    }
+    function showDiv(select){
+   if(select.value=='precise'){
+    document.getElementById('slider3').style.display = "inline";
+    document.getElementById('order').style.display = "none";
+    document.getElementById('sentimentType').style.display = "none";
+    document.getElementById('model').style.display = "inline";
+    document.getElementById('theta').style.display = "inline";
+    document.getElementById('output3').style.display = "inline";
+    document.getElementById('slider10').style.display = "none";
+    document.getElementById('gamma').style.display = "none";
+    document.getElementById('output10').style.display = "none";
+   } 
+
+   else{
+   document.getElementById('slider3').style.display = "none";
+    document.getElementById('order').style.display = "inline";
+    document.getElementById('sentimentType').style.display = "inline";
+    document.getElementById('model').style.display = "none";
+    document.getElementById('theta').style.display = "none";
+    document.getElementById('output3').style.display = "none";
+    document.getElementById('slider10').style.display = "inline";
+    document.getElementById('gamma').style.display = "inline";
+    document.getElementById('output10').style.display = "inline";
+   } 
+} 
+ </script>
+</body>
+</html>

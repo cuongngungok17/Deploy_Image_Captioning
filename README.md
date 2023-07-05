@@ -1,3 +1,4 @@
+Thank to Bui Minh Xin
 This is an educational project  
 Credits to joeyz0z for his repository https://github.com/joeyz0z/ConZIC  
   
